@@ -1,0 +1,14 @@
+{%extends 'online_store/base.html' %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+
+    <h2>{{product.name}}</h2>
+
+        <p class="card-text-break">{{product.description }}</p>
+        <p class="card-text">{{product.purchase_price}}</p>
+        <a href="{% url 'online_store:product_edit' product.pk %}" class="btn btn-secondary">Редактировать</a>
+        <a href="{% url 'online_store:product_delete' product.pk %}" class="btn btn-secondary">Удалить</a>
+        <a href="{% url 'online_store:product_list' %}" class="btn btn-secondary">Вернуться к списку</a>
+
+
+{% endblock %}

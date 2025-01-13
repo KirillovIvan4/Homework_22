@@ -1,0 +1,13 @@
+{%extends 'online_store/base.html' %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Форма MyModel</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a href="{% url 'online_store:product_list' %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}

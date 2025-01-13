@@ -1,0 +1,26 @@
+{%extends 'online_store/base.html' %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+<h1 class="text-center"> Главная </h1>
+<h6 class="text-center text-muted mb-2">
+    Вы находитесь на сайте, преднозначеном для продажи товаров
+</h6>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for product in object_list%}
+            <div class="card" style="width: 18rem;">
+                <img src="{{ product.preview  }}" width="150" height="150">
+                <div class="card-body">
+                    <a href="{% url 'online_store:product_detail' product.pk %}">{{product.name}}</a>
+                    <p class="card-text">{{product.description |truncatechars:100}}</p>
+                    <p class="card-text">{{product.purchase_price}}</p>
+                    <a href="{% url 'online_store:product_detail' product.pk %}" class="btn btn-outline-primary">Подробнее</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
