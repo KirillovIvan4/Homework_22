@@ -1,9 +1,7 @@
 {%extends 'online_store/base.html' %}
-{% block title %}Главная{% endblock %}
+{% block title %}Добавить Продукт{% endblock %}
 {% block content %}
-<div class="container mt-5">
-    <h1 class="mb-4">Форма MyModel</h1>
-    <form method="post">
+<div class="container mt-5">Добавить Продукт<form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Сохранить</button>

@@ -40,3 +40,29 @@ def contacts(request):
         return HttpResponse(f"Спасибо {name}!")
 
     return render(request, 'online_store/contacts.html')
+
+class CategoryCreateView(CreateView):
+    model = Category
+    fields = ['name', 'description']
+    #template_name = 'product_form.html'
+    success_url = reverse_lazy('online_store:category_list')
+
+class CategoryListView(ListView):
+    model = Category
+    #template_name = 'product_list.html'
+    context_object_name = 'category'
+
+class CategoryDetailView(DetailView):
+    model = Category
+    #template_name = 'product_detail.html'
+    context_object_name = 'category'
+
+class CategoryUpdateView(UpdateView):
+    model = Category
+    fields = ['name', 'description']
+    success_url = reverse_lazy('online_store:category_list')
+
+class CategoryDeleteView(DeleteView):
+    model = Category
+    #template_name = 'product_confirm_delete.html'
+    success_url = reverse_lazy('online_store:category_list')

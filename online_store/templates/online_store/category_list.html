@@ -9,9 +9,8 @@
     <div class="container">
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                       {% for category in object_list%}
+            {% for category in object_list%}
             <div class="card" style="width: 18rem;">
-                <img src="{{ category.preview  }}" width="150" height="150">
                 <div class="card-body">
                     <a href="{% url 'online_store:category_detail' category.pk %}">{{category.name}}</a>
                     <p class="card-text">{{category.description |truncatechars:100}}</p>

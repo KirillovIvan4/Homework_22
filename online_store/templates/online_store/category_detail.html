@@ -1,15 +1,16 @@
 {%extends 'online_store/base.html' %}
-{% block title %}Главная{% endblock %}
+{% block title %}{{category.name}}{% endblock %}
 {% block content %}
-<h1 class="text-center"> Главная </h1>
-<h6 class="text-center text-muted mb-2">
-    Вы находитесь на сайте, преднозначеном для продажи товаров
-</h6>
-<div class="album py-5 bg-body-tertiary">
-    <div class="container">
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                       {% for category in object_list%}
+    <h2>{{category.name}}</h2>
+
+        <p class="card-text-break">{{category.description }}</p>
+
+        <a href="{% url 'online_store:category_list' %}" class="btn btn-secondary">Редактировать</a>
+        <a href="{% url 'online_store:category_list' %}" class="btn btn-secondary">Удалить</a>
+        <a href="{% url 'online_store:category_list' %}" class="btn btn-secondary">Вернуться к списку</a>
+
+            {% for category in object_list%}
             <div class="card" style="width: 18rem;">
                 <img src="{{ category.preview  }}" width="150" height="150">
                 <div class="card-body">
@@ -20,7 +21,5 @@
                 </div>
             </div>
             {% endfor %}
-        </div>
-    </div>
-</div>
+
 {% endblock %}

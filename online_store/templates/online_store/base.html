@@ -25,7 +25,7 @@
                     <li>
                         <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                             <li class="w-100">
-                                <a href="#" class="nav-link px-0"> <span
+                                <a href="{% url 'online_store:category_list' %}" class="nav-link px-0"> <span
                                         class="d-none d-sm-inline">Категории</span> </a>
                             </li>
                             <li class="w-100">
@@ -35,6 +35,10 @@
                             <li>
                                 <a href="http://127.0.0.1:8000/contacts" class="nav-link px-0"> <span
                                         class="d-none d-sm-inline">Контакты</span> </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'online_store:product_create' %}" class="nav-link px-0"> <span
+                                        class="d-none d-sm-inline">Создать Продукт</span> </a>
                             </li>
                         </ul>
                     </li>
