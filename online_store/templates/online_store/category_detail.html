@@ -1,5 +1,6 @@
 {%extends 'online_store/base.html' %}
 {% block title %}{{category.name}}{% endblock %}
+{% block menu %} {% include 'online_store/menu.html' %}  {% endblock %}
 {% block content %}
 
     <h2>{{category.name}}</h2>

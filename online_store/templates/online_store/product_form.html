@@ -1,5 +1,6 @@
 {%extends 'online_store/base.html' %}
 {% block title %}Добавить Продукт{% endblock %}
+{% block menu %} {% include 'online_store/menu.html' %}  {% endblock %}
 {% block content %}
 <div class="container mt-5">Добавить Продукт<form method="post">
         {% csrf_token %}
