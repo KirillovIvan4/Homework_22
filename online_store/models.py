@@ -41,3 +41,4 @@ class Category(models.Model):
         verbose_name_plural = "категории"
         ordering = ["name"] #Сортировка
         db_table = 'Category' #Название таблици
+

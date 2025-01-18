@@ -3,24 +3,14 @@
 {% block menu %} {% include 'online_store/menu.html' %}  {% endblock %}
 {% block content %}
 
-    <h2>{{category.name}}</h2>
+<h2>{{category.name}}</h2>
 
-        <p class="card-text-break">{{category.description }}</p>
+<p class="card-text-break">{{category.description }}</p>
 
-        <a href="{% url 'online_store:category_list' %}" class="btn btn-secondary">Редактировать</a>
-        <a href="{% url 'online_store:category_list' %}" class="btn btn-secondary">Удалить</a>
-        <a href="{% url 'online_store:category_list' %}" class="btn btn-secondary">Вернуться к списку</a>
-
-            {% for category in object_list%}
-            <div class="card" style="width: 18rem;">
-                <img src="{{ category.preview  }}" width="150" height="150">
-                <div class="card-body">
-                    <a href="{% url 'online_store:category_detail' category.pk %}">{{category.name}}</a>
-                    <p class="card-text">{{category.description |truncatechars:100}}</p>
-
-                    <a href="{% url 'online_store:category_detail' category.pk %}" class="btn btn-outline-primary">Подробнее</a>
-                </div>
-            </div>
-            {% endfor %}
+<a href="{% url 'online_store:category_list' %}" class="btn btn-secondary">Редактировать</a>
+<a href="{% url 'online_store:category_list' %}" class="btn btn-secondary">Удалить</a>
+<a href="{% url 'online_store:category_list' %}" class="btn btn-secondary">Вернуться к списку</a>
+<a href="{% url 'online_store:category_product_detail' category.pk %}" class="btn btn-secondary"> список</a>
 
 {% endblock %}
+{% include 'templates/category_product_detail.html' %}

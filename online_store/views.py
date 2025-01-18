@@ -66,3 +66,8 @@ class CategoryDeleteView(DeleteView):
     model = Category
     #template_name = 'product_confirm_delete.html'
     success_url = reverse_lazy('online_store:category_list')
+
+def category_product_detail(request, pk):
+    category = Category.objects.get(pk=pk)
+    products = category.product.all()
+    return render(request, 'category_product_detail.html', {'category': category, 'products': products})

@@ -1,12 +1,14 @@
 from django.urls import path
 from . import views
+from online_store.views import category_product_detail
 from online_store.views import ProductCreateView, ProductUpdateView, ProductDeleteView, ProductListView, ProductDetailView
 from online_store.views import CategoryCreateView, CategoryUpdateView, CategoryDeleteView, CategoryListView, CategoryDetailView
-from blogs.views import PublicationsCreateView, PublicationsUpdateView, PublicationsDeleteView, PublicationsListView, PublicationsDetailView
+
 app_name = 'online_store'
 
 urlpatterns = [
-    path('contacts', views.contacts, name='contacts'),
+    path('contacts/', views.contacts, name='contacts'),
+    path('category/detail/<int:pk>', views.category_product_detail, name='category_product_detail'),
 
     path('', ProductListView.as_view(), name='product_list'),
     path('product/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
