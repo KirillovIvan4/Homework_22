@@ -1,0 +1,12 @@
+{%extends 'online_store/base.html' %}
+{% block title %}Добавить Продукт{% endblock %}
+{% block menu %} {% include 'online_store/menu.html' %}  {% endblock %}
+{% block content %}
+<div class="container mt-5">Добавить Продукт<form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a href="{% url 'online_store:product_list' %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}

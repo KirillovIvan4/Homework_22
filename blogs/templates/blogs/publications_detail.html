@@ -1,0 +1,29 @@
+{%extends 'online_store/base.html' %}
+{% block title %}{{publications.title}}{% endblock %}
+{% block menu %} {% include 'blogs/menu.html' %}  {% endblock %}
+{% block content %}
+<section class="py-5 text-center container">
+    <div class="row py-lg-10">
+        <div class="card" style="width: 40rem;">
+            <img src="{{ publications.preview }}" width: 100px; height: 100px;>
+            <div class="card-body">
+                <h2 class="card-title">{{publications.title}}</h2>
+
+            </div>
+            <ul class="list-group list-group-flush">
+
+                <li class="list-group-item">{{ publications.content }}</li>
+                <li class="list-group-item">{{ publications.created_at }}</li>
+                <li class="list-group-item">{{ publications.number_of_views }}</li>
+
+            </ul>
+            <div class="card-body">
+                <a href="{% url 'blogs:publications_edit' publications.pk %}" class="btn btn-secondary">Редактировать</a>
+                <a href="{% url 'blogs:publications_delete' publications.pk %}" class="btn btn-secondary">Удалить</a>
+                <a href="{% url 'blogs:publications_list' %}" class="btn btn-secondary">Вернуться к списку</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
