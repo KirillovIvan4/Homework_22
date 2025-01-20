@@ -27,6 +27,11 @@
                             <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Блог</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{% url 'mailing:mailing_list' %}" class="nav-link align-middle px-0">
+                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Рассылка</span>
+                        </a>
+                    </li>
                     <li>
                         <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                             {% block menu %} Добавь меню {% endblock %}
