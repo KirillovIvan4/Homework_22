@@ -52,4 +52,10 @@ class Mailing(models.Model):
         verbose_name="сообщение",
         **NULLBLE
     )
-    recipients =  models.ManyToManyField('Mailing_recipient',blank=True, verbose_name="получатель",**NULLBLE)
+    recipients =  models.ManyToManyField('Mailing_recipient', verbose_name="получатель",**NULLBLE)
+
+    class Meta:
+        verbose_name = "рассылка"
+        verbose_name_plural = "рассылки"
+        ordering = ["status", "date_and_time_of_first_sending", "date_and_time_of_sending_end"]  # Сортировка
+        db_table = 'Mailing'  # Название таблици
