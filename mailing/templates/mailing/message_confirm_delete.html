@@ -1,9 +1,9 @@
 {%extends 'online_store/base.html' %}
-{% block title %}Удалить Публикацию{% endblock %}
-{% block menu %} {% include 'mailing/menu.html' %}  {% endblock %}
+{% block title %}Удалить сообщение{% endblock %}
+{% block show_mailing%} {% include 'online_store/menu.html' %}  {% endblock %}
 {% block content %}
-h2>Удалить Публикацию</h2>
-<p>Вы уверены, что хотите удалить "{{publications.title}}"?</p>
+h2>Удалить сообщение</h2>
+<p>Вы уверены, что хотите удалить?</p>
 <form method="post">
     {% csrf_token %}
     <button type="submit" class="btn btn-danger">Удалить</button>

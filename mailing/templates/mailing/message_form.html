@@ -1,8 +1,8 @@
 {%extends 'online_store/base.html' %}
-{% block title %}Добавить Публикацию{% endblock %}
-{% block menu %} {% include 'mailing/menu.html' %}  {% endblock %}
+{% block title %}Добавить сообщение{% endblock %}
+{% block show_mailing%} {% include 'online_store/menu.html' %}  {% endblock %}
 {% block content %}
-<div class="container mt-5">Добавить Публикацию
+<div class="container mt-5">Добавить сообщение
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

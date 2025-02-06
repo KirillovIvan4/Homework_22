@@ -1,21 +1,18 @@
 {%extends 'online_store/base.html' %}
-{% block title %}Главная{% endblock %}
-{% block menu %} {% include 'mailing/menu.html' %}  {% endblock %}
+{% block title %}Получатели рассылок{% endblock %}
+{% block show_mailing%} {% include 'online_store/menu.html' %}  {% endblock %}
 {% block content %}
-<h1 class="text-center"> Главная </h1>
-<h6 class="text-center text-muted mb-2">
-    Вы находитесь на сайте, преднозначеном для продажи товаров
-</h6>
+<h1 class="text-center"> Получатели рассылок </h1>
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for publications in object_list%}
+            {% for mailing_recipient in object_list%}
             <div class="card" style="width: 18rem;">
-                <img src="{{ publications.preview  }}" width="150" height="150">
                 <div class="card-body">
-                    <a href="{% url 'blogs:publications_detail' publications.pk %}">{{publications.title}}</a>
-                    <p class="card-text">{{publications.content |truncatechars:100}}</p>
+                    <a href="{% url 'mailing:mailing_recipient_detail' mailing_recipient.pk %}">Email - {{mailing_recipient.email}}</a>
+                    <p class="card-text">Ф.И.О. - {{mailing_recipient.full_name}}</p>
+                    <p class="card-text">Комментарий - {{mailing_recipient.comment |truncatechars:100}}</p>
                 </div>
             </div>
             {% endfor %}

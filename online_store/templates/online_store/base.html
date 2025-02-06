@@ -11,50 +11,130 @@
 <body>
 <div class="container-fluid">
     <div class="row flex-nowrap">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-warning bg-opacity-50">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                 <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                     <span class="fs-5 d-none d-sm-inline">Меню</span>
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                    <li class="nav-item">
-                        <a href="{% url 'online_store:product_list'%}" class="nav-link align-middle px-0">
-                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Магазин</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'blogs:publications_list' %}" class="nav-link align-middle px-0">
-                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Блог</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'mailing:mailing_list' %}" class="nav-link align-middle px-0">
-                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Рассылка</span>
-                        </a>
-                    </li>
-                    <li>
-                        <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
-                            {% block menu %} Добавь меню {% endblock %}
-                            <li>
-                                <a href="http://127.0.0.1:8000/contacts" class="nav-link px-0"> <span
-                                        class="d-none d-sm-inline">Контакты</span> </a>
-                            </li>
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item bg-warning  bg-opacity-60">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button bg-warning bg-opacity-60" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <a href="{% url 'online_store:product_list'%}" class="nav-link align-middle px-0">
+                                        <i class="fs-4 bi-house"></i> <span
+                                            class="ms-1 d-none d-sm-inline">Магазин</span>
+                                    </a>
+                                </button>
+                            </h2>
+                            {% block show_store%}
+                            <div id="collapseOne" class="accordion-collapse collapse "
+                                 data-bs-parent="#accordionExample">
+                                {% endblock %}
+                                <div class="accordion-body">
+                                    <li class="w-100">
+                                        <a href="{% url 'online_store:category_list' %}" class="nav-link px-0"> <span
+                                                class="d-none d-sm-inline">Категории</span> </a>
+                                    </li>
+                                    <li class="w-100">
+                                        <a href="#" class="nav-link px-0"> <span
+                                                class="d-none d-sm-inline">Заказы</span> </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'online_store:product_create' %}" class="nav-link px-0"> <span
+                                                class="d-none d-sm-inline">Создать Продукт</span> </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'online_store:product_create' %}" class="nav-link px-0"> <span
+                                                class="d-none d-sm-inline">Создать Продукт</span> </a>
+                                    </li>
 
-                        </ul>
-                    </li>
-                    <hr>
-                    <div class="dropdown pb-4">
-                        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-                           id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30"
-                                 class="rounded-circle">
-                            <span class="d-none d-sm-inline mx-1">Пользователь</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                            <li><a class="dropdown-item" href="#">Профиль</a></li>
-                            <li><a class="dropdown-item" href="#">Выход</a></li>
-                        </ul>
-                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item bg-warning bg-opacity-60">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-warning bg-opacity-60" type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <a href="{% url 'blogs:publications_list' %}" class="nav-link align-middle px-0">
+                                        <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Блог</span>
+                                    </a>
+                                </button>
+                            </h2>
+                             {% block show_blogs%}
+                            <div id="collapseTwo" class="accordion-collapse collapse"
+                                 data-bs-parent="#accordionExample">
+                                {% endblock %}
+                                <div class="accordion-body">
+                                    <li>
+                                        <a href="{% url 'blogs:publications_create' %}" class="nav-link px-0"> <span
+                                                class="d-none d-sm-inline">Добавить публикацию </span> </a>
+                                    </li>
+                                </div>
+                            </div>
+                            <div class="accordion-item bg-warning bg-opacity-60">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed bg-warning bg-opacity-60" type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseThree" aria-expanded="false"
+                                            aria-controls="collapseThree">
+                                        <a href="{% url 'mailing:mailing_list' %}" class="nav-link align-middle px-0">
+                                            <i class="fs-4 bi-house"></i> <span
+                                                class="ms-1 d-none d-sm-inline">Рассылка</span>
+                                        </a>
+                                    </button>
+                                </h2>
+                                {% block show_mailing%}
+                                <div id="collapseThree" class="accordion-collapse collapse"
+                                     data-bs-parent="#accordionExample">
+                                    {% endblock %}
+                                    <div class="accordion-body">
+                                        <li>
+                                            <a href="{% url 'mailing:mailing_create' %}" class="nav-link px-0"> <span
+                                                    class="d-none d-sm-inline">Добавить рассылку</span> </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'mailing:mailing_recipient_list' %}" class="nav-link px-0"> <span
+                                                    class="d-none d-sm-inline">Получатель рассылки</span> </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'mailing:mailing_recipient_create' %}"
+                                               class="nav-link px-0"> <span
+                                                    class="d-none d-sm-inline">Добавить получателя рассылки</span> </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'mailing:message_list' %}" class="nav-link px-0"> <span
+                                                    class="d-none d-sm-inline">Сообщение</span> </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'mailing:message_create' %}" class="nav-link px-0"> <span
+                                                    class="d-none d-sm-inline">Добавить Сообщение</span> </a>
+                                        </li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <li>
+                            <a href="http://127.0.0.1:8000/contacts" class="nav-link px-0"> <span
+                                    class="d-none d-sm-inline">Контакты</span> </a>
+                        </li>
+                        <hr>
+                        <div class="dropdown pb-4">
+                            <a href="#"
+                               class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                               id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30"
+                                     class="rounded-circle">
+                                <span class="d-none d-sm-inline mx-1">Пользователь</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                                <li><a class="dropdown-item" href="#">Профиль</a></li>
+                                <li><a class="dropdown-item" href="#">Выход</a></li>
+                            </ul>
+                        </div>
                 </ul>
             </div>
         </div>
@@ -63,6 +143,7 @@
         </div>
     </div>
 </div>
+<script src="/static/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
