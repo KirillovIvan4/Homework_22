@@ -16,7 +16,6 @@ class Mailing_recipientListView(ListView):
     #template_name = 'Mailing_recipient_list.html'
     context_object_name = 'mailing_recipient'
 
-
 class Mailing_recipientDetailView(DetailView):
     model = Mailing_recipient
     #template_name = 'Mailing_recipient_detail.html'
@@ -72,6 +71,9 @@ class MailingListView(ListView):
     model = Mailing
     #template_name = 'Mailing_list.html'
     context_object_name = 'mailing'
+
+    def get_queryset(self):
+        return Mailing.objects.filter(status='launched')
 
 class MailingDetailView(DetailView):
     model = Mailing

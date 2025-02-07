@@ -59,3 +59,15 @@ class Mailing(models.Model):
         verbose_name_plural = "рассылки"
         ordering = ["status", "date_and_time_of_first_sending", "date_and_time_of_sending_end"]  # Сортировка
         db_table = 'Mailing'  # Название таблици
+
+
+
+    class Mailing_attempt(models.Model):
+        CREATED = 'successfully'
+        LAUNCHED = 'launched'
+        COMPLETED = 'completed'
+        STATUS_MAILING = [
+            (CREATED, 'Создана'),
+            (LAUNCHED, 'Запущена'),
+            (COMPLETED, 'Завершена'),
+        ]

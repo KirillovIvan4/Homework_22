@@ -4,10 +4,13 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import  CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from online_store.models import Product, Category
+from online_store.forms import ProductForm
+
 
 class ProductCreateView(CreateView):
     model = Product
-    fields = ['name', 'description', 'category', 'purchase_price', 'preview']
+    form_class = ProductForm
+    #fields = ['name', 'description', 'category', 'purchase_price', 'preview']
     #template_name = 'product_form.html'
     success_url = reverse_lazy('online_store:product_list')
 
@@ -23,7 +26,8 @@ class ProductDetailView(DetailView):
 
 class ProductUpdateView(UpdateView):
     model = Product
-    fields = ['name', 'description', 'category', 'purchase_price', 'preview']
+    form_class = ProductForm
+    #fields = ['name', 'description', 'category', 'purchase_price', 'preview']
     success_url = reverse_lazy('online_store:product_list')
 
 class ProductDeleteView(DeleteView):
