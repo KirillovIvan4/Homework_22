@@ -11,18 +11,18 @@
 <body>
 <div class="container-fluid">
     <div class="row flex-nowrap">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-warning bg-opacity-50">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 text-light bg-secondary bg-opacity-50">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                 <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                     <span class="fs-5 d-none d-sm-inline">Меню</span>
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <div class="accordion" id="accordionExample">
-                        <div class="accordion-item bg-warning  bg-opacity-60">
+                        <div class="accordion-item bg-secondary  bg-opacity-60">
                             <h2 class="accordion-header">
-                                <button class="accordion-button bg-warning bg-opacity-60" type="button" data-bs-toggle="collapse"
+                                <button class="accordion-button bg-secondary bg-opacity-60" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    <a href="{% url 'online_store:product_list'%}" class="nav-link align-middle px-0">
+                                    <a href="{% url 'online_store:product_list'%}" class="nav-link align-middle px-0 text-light">
                                         <i class="fs-4 bi-house"></i> <span
                                             class="ms-1 d-none d-sm-inline">Магазин</span>
                                     </a>
@@ -34,19 +34,19 @@
                                 {% endblock %}
                                 <div class="accordion-body">
                                     <li class="w-100">
-                                        <a href="{% url 'online_store:category_list' %}" class="nav-link px-0"> <span
+                                        <a href="{% url 'online_store:category_list' %}" class="nav-link px-0 text-light"> <span
                                                 class="d-none d-sm-inline">Категории</span> </a>
                                     </li>
                                     <li class="w-100">
-                                        <a href="#" class="nav-link px-0"> <span
+                                        <a href="#" class="nav-link px-0 text-light"> <span
                                                 class="d-none d-sm-inline">Заказы</span> </a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'online_store:product_create' %}" class="nav-link px-0"> <span
+                                        <a href="{% url 'online_store:product_create' %}" class="nav-link px-0 text-light"> <span
                                                 class="d-none d-sm-inline">Создать Продукт</span> </a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'online_store:product_create' %}" class="nav-link px-0"> <span
+                                        <a href="{% url 'online_store:product_create' %}" class="nav-link px-0 text-light"> <span
                                                 class="d-none d-sm-inline">Создать Продукт</span> </a>
                                     </li>
 
@@ -54,12 +54,12 @@
                             </div>
                         </div>
 
-                        <div class="accordion-item bg-warning bg-opacity-60">
+                        <div class="accordion-item bg-secondary bg-opacity-60">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed bg-warning bg-opacity-60" type="button"
+                                <button class="accordion-button collapsed bg-secondary bg-opacity-60" type="button"
                                         data-bs-toggle="collapse"
                                         data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    <a href="{% url 'blogs:publications_list' %}" class="nav-link align-middle px-0">
+                                    <a href="{% url 'blogs:publications_list' %}" class="nav-link align-middle px-0 text-light">
                                         <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Блог</span>
                                     </a>
                                 </button>
@@ -70,18 +70,18 @@
                                 {% endblock %}
                                 <div class="accordion-body">
                                     <li>
-                                        <a href="{% url 'blogs:publications_create' %}" class="nav-link px-0"> <span
+                                        <a href="{% url 'blogs:publications_create' %}" class="nav-link px-0 text-light"> <span
                                                 class="d-none d-sm-inline">Добавить публикацию </span> </a>
                                     </li>
                                 </div>
                             </div>
-                            <div class="accordion-item bg-warning bg-opacity-60">
+                            <div class="accordion-item bg-secondary bg-opacity-60">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed bg-warning bg-opacity-60" type="button"
+                                    <button class="accordion-button collapsed bg-secondary bg-opacity-60" type="button"
                                             data-bs-toggle="collapse"
                                             data-bs-target="#collapseThree" aria-expanded="false"
                                             aria-controls="collapseThree">
-                                        <a href="{% url 'mailing:mailing_list' %}" class="nav-link align-middle px-0">
+                                        <a href="{% url 'mailing:mailing_list' %}" class="nav-link align-middle px-0 text-light">
                                             <i class="fs-4 bi-house"></i> <span
                                                 class="ms-1 d-none d-sm-inline">Рассылка</span>
                                         </a>
@@ -93,24 +93,24 @@
                                     {% endblock %}
                                     <div class="accordion-body">
                                         <li>
-                                            <a href="{% url 'mailing:mailing_create' %}" class="nav-link px-0"> <span
+                                            <a href="{% url 'mailing:mailing_create' %}" class="nav-link px-0 text-light"> <span
                                                     class="d-none d-sm-inline">Добавить рассылку</span> </a>
                                         </li>
                                         <li>
-                                            <a href="{% url 'mailing:mailing_recipient_list' %}" class="nav-link px-0"> <span
+                                            <a href="{% url 'mailing:mailing_recipient_list' %}" class="nav-link px-0 text-light"> <span
                                                     class="d-none d-sm-inline">Получатель рассылки</span> </a>
                                         </li>
                                         <li>
                                             <a href="{% url 'mailing:mailing_recipient_create' %}"
-                                               class="nav-link px-0"> <span
+                                               class="nav-link px-0 text-light"> <span
                                                     class="d-none d-sm-inline">Добавить получателя рассылки</span> </a>
                                         </li>
                                         <li>
-                                            <a href="{% url 'mailing:message_list' %}" class="nav-link px-0"> <span
+                                            <a href="{% url 'mailing:message_list' %}" class="nav-link px-0 text-light"> <span
                                                     class="d-none d-sm-inline">Сообщение</span> </a>
                                         </li>
                                         <li>
-                                            <a href="{% url 'mailing:message_create' %}" class="nav-link px-0"> <span
+                                            <a href="{% url 'mailing:message_create' %}" class="nav-link px-0 text-light"> <span
                                                     class="d-none d-sm-inline">Добавить Сообщение</span> </a>
                                         </li>
                                     </div>
@@ -118,7 +118,7 @@
                             </div>
                         </div>
                         <li>
-                            <a href="http://127.0.0.1:8000/contacts" class="nav-link px-0"> <span
+                            <a href="http://127.0.0.1:8000/contacts" class="nav-link px-0 text-light"> <span
                                     class="d-none d-sm-inline">Контакты</span> </a>
                         </li>
                         <hr>
