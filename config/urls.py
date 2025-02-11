@@ -9,6 +9,7 @@ urlpatterns = [
     path('', include('online_store.urls', namespace='online_store')),
     path('blogs/', include('blogs.urls', namespace='blogs')),
     path('mailing/', include('mailing.urls', namespace='mailing')),
+    path('users/', include('users.urls', namespace='users')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
