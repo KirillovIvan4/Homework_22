@@ -3,9 +3,10 @@ from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import  CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from blogs.models import Publications
 
-class PublicationsCreateView(CreateView):
+class PublicationsCreateView(LoginRequiredMixin, CreateView):
     model = Publications
     fields = ['title', 'content', 'preview', 'publication_flag']
     #template_name = 'Publications_form.html'
@@ -30,7 +31,7 @@ class PublicationsDetailView(DetailView):
         self.object.save()
         return self.object
 
-class PublicationsUpdateView(UpdateView):
+class PublicationsUpdateView(LoginRequiredMixin, UpdateView):
     model = Publications
     fields = ['title', 'content', 'preview', 'publication_flag']
     success_url = reverse_lazy('blogs:publications_list')
