@@ -3,9 +3,10 @@ from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import  CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from mailing.models import Mailing_recipient, Message, Mailing
 
-class Mailing_recipientCreateView(CreateView):
+class Mailing_recipientCreateView(LoginRequiredMixin, CreateView):
     model = Mailing_recipient
     fields = ['email', 'full_name', 'comment']
     #template_name = 'Mailing_recipient_form.html'
@@ -23,7 +24,7 @@ class Mailing_recipientDetailView(DetailView):
 
 
 
-class Mailing_recipientUpdateView(UpdateView):
+class Mailing_recipientUpdateView(LoginRequiredMixin, UpdateView):
     model = Mailing_recipient
     fields = ['email', 'full_name', 'comment']
     success_url = reverse_lazy('mailing:mailing_recipient_list')
@@ -35,7 +36,7 @@ class Mailing_recipientDeleteView(DeleteView):
     success_url = reverse_lazy('mailing:mailing_recipient_list')
     
     
-class MessageCreateView(CreateView):
+class MessageCreateView(LoginRequiredMixin, CreateView):
     model = Message
     fields = ['subject_letter', 'body_letter']
     #template_name = 'Message_form.html'
@@ -51,7 +52,7 @@ class MessageDetailView(DetailView):
     #template_name = 'Message_detail.html'
     context_object_name = 'message'
 
-class MessageUpdateView(UpdateView):
+class MessageUpdateView(LoginRequiredMixin, UpdateView):
     model = Message
     fields = ['subject_letter', 'body_letter']
     success_url = reverse_lazy('mailing:message_list')
@@ -61,7 +62,7 @@ class MessageDeleteView(DeleteView):
     #template_name = 'Message_confirm_delete.html'
     success_url = reverse_lazy('mailing:message_list')
     
-class MailingCreateView(CreateView):
+class MailingCreateView(LoginRequiredMixin, CreateView):
     model = Mailing
     fields = ['date_and_time_of_sending_end', 'status', 'message', 'recipients']
     #template_name = 'Mailing_form.html'
@@ -80,7 +81,7 @@ class MailingDetailView(DetailView):
     #template_name = 'Mailing_detail.html'
     context_object_name = 'mailing'
 
-class MailingUpdateView(UpdateView):
+class MailingUpdateView(LoginRequiredMixin, UpdateView):
     model = Mailing
     fields = ['date_and_time_of_sending_end', 'status', 'message', 'recipients']
     success_url = reverse_lazy('mailing:mailing_list')
