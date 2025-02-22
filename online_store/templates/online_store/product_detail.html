@@ -7,8 +7,10 @@
 
         <p class="card-text-break">{{product.description }}</p>
         <p class="card-text">{{product.purchase_price}}</p>
+{% if perms.can_unpublish_product or user == product.creator%}
         <a href="{% url 'online_store:product_edit' product.pk %}" class="btn btn-secondary">Редактировать</a>
         <a href="{% url 'online_store:product_delete' product.pk %}" class="btn btn-secondary">Удалить</a>
+{% endif %}
         <a href="{% url 'online_store:product_list' %}" class="btn btn-secondary">Вернуться к списку</a>
 
 
