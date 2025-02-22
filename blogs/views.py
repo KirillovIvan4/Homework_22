@@ -12,6 +12,13 @@ class PublicationsCreateView(LoginRequiredMixin, CreateView):
     #template_name = 'Publications_form.html'
     success_url = reverse_lazy('blogs:publications_list')
 
+    def form_valid(self, form):
+        publication = form.save()
+        user = self.request.user
+        publication.creator = user
+        publication.save()
+        return super().form_valid(form)
+
 class PublicationsListView(ListView):
     model = Publications
     #template_name = 'Publications_list.html'

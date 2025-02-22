@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import  CreateView, UpdateView, DeleteView
@@ -6,6 +5,8 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from online_store.models import Product, Category
 from online_store.forms import ProductForm
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -14,6 +15,13 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     #fields = ['name', 'description', 'category', 'purchase_price', 'preview']
     #template_name = 'product_form.html'
     success_url = reverse_lazy('online_store:product_list')
+
+    def form_valid(self, form):
+        product = form.save()
+        user = self.request.user
+        product.creator = user
+        product.save()
+        return super().form_valid(form)
 
 class ProductListView(ListView):
     model = Product
