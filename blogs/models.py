@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import CustomUser
 
 
 NULLBLE = {"blank": True, "null": True}
@@ -11,6 +12,13 @@ class Publications(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name="дата последних изменений")
     publication_flag = models.BooleanField(default=True, verbose_name="опубликовано")
     number_of_views = models.IntegerField(default=0, verbose_name="просмотры")
+    creator = models.ForeignKey(
+        CustomUser,
+        on_delete=models.SET_NULL,
+        related_name="publications",
+        verbose_name="создатель",
+        **NULLBLE
+    )
 
     def __str__(self):
         return f"{self.title}"

@@ -71,3 +71,4 @@ class Mailing(models.Model):
             (LAUNCHED, 'Запущена'),
             (COMPLETED, 'Завершена'),
         ]
+
