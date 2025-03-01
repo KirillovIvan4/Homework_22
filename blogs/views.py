@@ -1,10 +1,12 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import  CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from blogs.models import Publications
+from blogs.services import get_publications_from_cache
+
 
 class PublicationsCreateView(LoginRequiredMixin, CreateView):
     model = Publications
@@ -19,14 +21,24 @@ class PublicationsCreateView(LoginRequiredMixin, CreateView):
         publication.save()
         return super().form_valid(form)
 
+
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class PublicationsListView(ListView):
     model = Publications
     #template_name = 'Publications_list.html'
     context_object_name = 'publications'
 
+    # def get_queryset(self):
+    #     return Publications.objects.filter(publication_flag=True)
+    # def get_queryset(self):
+    #     return get_publications_from_cache()
+
     def get_queryset(self):
         return Publications.objects.filter(publication_flag=True)
+        # return get_publications_from_cache()
 
+
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class PublicationsDetailView(DetailView):
     model = Publications
     #template_name = 'Publications_detail.html'
