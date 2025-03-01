@@ -1,4 +1,6 @@
 from django.http import HttpResponse
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import  CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -7,6 +9,8 @@ from online_store.models import Product, Category
 from online_store.forms import ProductForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+
+from online_store.services import get_products_from_cache, get_categorys_from_cache, get_products_by_category
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -23,11 +27,18 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         product.save()
         return super().form_valid(form)
 
+
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class ProductListView(ListView):
     model = Product
     #template_name = 'product_list.html'
     context_object_name = 'products'
 
+    def get_queryset(self):
+        return get_products_from_cache()
+
+
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class ProductDetailView(DetailView):
     model = Product
     #template_name = 'product_detail.html'
@@ -65,6 +76,9 @@ class CategoryListView(ListView):
     #template_name = 'product_list.html'
     context_object_name = 'category'
 
+    def get_queryset(self):
+        return get_categorys_from_cache()
+
 class CategoryDetailView(DetailView):
     model = Category
     #template_name = 'product_detail.html'
@@ -84,3 +98,9 @@ def category_product_detail(request, pk):
     category = Category.objects.get(pk=pk)
     products = category.product.all()
     return render(request, 'category_product_detail.html', {'category': category, 'products': products})
+
+class ProductsByCategoryView(ListView):
+    model = Category
+    def get_queryset(self):
+        category_id = self.kwargs.get('pk')
+        return get_products_by_category(category_id=category_id)

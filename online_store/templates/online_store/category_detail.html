@@ -9,7 +9,7 @@
 <a href="{% url 'online_store:category_list' %}" class="btn btn-secondary">Редактировать</a>
 <a href="{% url 'online_store:category_delete' category.pk %}" class="btn btn-secondary">Удалить</a>
 <a href="{% url 'online_store:category_list' %}" class="btn btn-secondary">Вернуться к списку</a>
-<a href="{% url 'online_store:category_product_detail' category.pk %}" class="btn btn-secondary"> список</a>
+<a href="{% url 'online_store:products_by_category' category.pk %}" role="button" class="btn btn-secondary">Список продуктов</a>
 
 {% endblock %}
 {% include 'templates/category_product_detail.html' %}

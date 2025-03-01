@@ -10,13 +10,13 @@
     <div class="container">
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
             {% for category in object_list%}
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <a href="{% url 'online_store:category_detail' category.pk %}">{{category.name}}</a>
                     <p class="card-text">{{category.description |truncatechars:100}}</p>
-
-                    <a href="{% url 'online_store:category_detail' category.pk %}" class="btn btn-outline-primary">Подробнее</a>
+                    <a href="{% url 'online_store:products_by_category' category.pk %}" role="button" class="btn btn-secondary">Список продуктов</a>
                 </div>
             </div>
             {% endfor %}
