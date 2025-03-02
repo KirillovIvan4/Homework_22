@@ -71,14 +71,16 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
     #template_name = 'product_form.html'
     success_url = reverse_lazy('online_store:category_list')
 
+# @method_decorator(cache_page(60 * 15), name='dispatch')
 class CategoryListView(ListView):
     model = Category
     #template_name = 'product_list.html'
     context_object_name = 'category'
 
-    def get_queryset(self):
-        return get_categorys_from_cache()
+    # def get_queryset(self):
+    #     return get_categorys_from_cache()
 
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class CategoryDetailView(DetailView):
     model = Category
     #template_name = 'product_detail.html'

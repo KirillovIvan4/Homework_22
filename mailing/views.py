@@ -5,6 +5,8 @@ from django.views.generic.edit import  CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from mailing.models import Mailing_recipient, Message, Mailing
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 class Mailing_recipientCreateView(LoginRequiredMixin, CreateView):
     model = Mailing_recipient
@@ -12,11 +14,13 @@ class Mailing_recipientCreateView(LoginRequiredMixin, CreateView):
     #template_name = 'Mailing_recipient_form.html'
     success_url = reverse_lazy('mailing:mailing_recipient_list')
 
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class Mailing_recipientListView(ListView):
     model = Mailing_recipient
     #template_name = 'Mailing_recipient_list.html'
     context_object_name = 'mailing_recipient'
 
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class Mailing_recipientDetailView(DetailView):
     model = Mailing_recipient
     #template_name = 'Mailing_recipient_detail.html'
@@ -42,11 +46,13 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
     #template_name = 'Message_form.html'
     success_url = reverse_lazy('mailing:message_list')
 
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class MessageListView(ListView):
     model = Message
     #template_name = 'Message_list.html'
     context_object_name = 'message'
 
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class MessageDetailView(DetailView):
     model = Message
     #template_name = 'Message_detail.html'
@@ -68,6 +74,7 @@ class MailingCreateView(LoginRequiredMixin, CreateView):
     #template_name = 'Mailing_form.html'
     success_url = reverse_lazy('mailing:mailing_list')
 
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class MailingListView(ListView):
     model = Mailing
     #template_name = 'Mailing_list.html'
@@ -76,6 +83,7 @@ class MailingListView(ListView):
     def get_queryset(self):
         return Mailing.objects.filter(status='launched')
 
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class MailingDetailView(DetailView):
     model = Mailing
     #template_name = 'Mailing_detail.html'
