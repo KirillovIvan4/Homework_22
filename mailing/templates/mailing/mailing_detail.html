@@ -3,22 +3,40 @@
 {% block show_mailing%} {% include 'online_store/menu.html' %}  {% endblock %}
 {% block content %}
 <section class="py-5 text-center container">
-    <div class="row py-lg-10">
+    <div class="row py-lg-5">
         <div class="card" style="width: 40rem;">
-            <ul class="list-group list-group-flush">
-
-                <li class="list-group-item">Дата и время первой отправки" - {{mailing.date_and_time_of_first_sending }}</li>
-                <li class="list-group-item">Дата и время окончания отправки - {{mailing.date_and_time_of_sending_end }}</li>
-                <li class="list-group-item">Статус - {{mailing.status }}</li>
-                <li class="list-group-item">Сообщение - {{mailing.message }}</li>
-                <li class="list-group-item">Получатель - {{mailing.recipients }}</li>
-
-            </ul>
-            <div class="card-body">
-                <a href="{% url 'mailing:mailing_edit' mailing.pk %}" class="btn btn-secondary">Редактировать</a>
-                <a href="{% url 'mailing:mailing_delete' mailing.pk %}" class="btn btn-secondary">Удалить</a>
-                <a href="{% url 'mailing:mailing_list' %}" class="btn btn-secondary">Вернуться к списку рассылок</a>
-            </div>
+            <form method="post" action="{% url 'mailing:mailing_detail' mailing.pk %}">
+                {% csrf_token %}
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Дата и время первой отправки - {{ mailing.date_and_time_of_first_sending
+                        }}
+                    </li>
+                    <li class="list-group-item">Дата и время окончания отправки - {{
+                        mailing.date_and_time_of_sending_end }}
+                    </li>
+                    <li class="list-group-item">Статус - {{ mailing.status }}</li>
+                    <li class="list-group-item">
+                        Тема сообщения - {{ mailing.message.subject_letter }}
+                        <input type="hidden" name="subject_letter" value="{{ mailing.message.subject_letter }}">
+                    </li>
+                    <li class="list-group-item">
+                        Сообщение - {{ mailing.message.body_letter }}
+                        <input type="hidden" name="body_letter" value="{{ mailing.message.body_letter }}">
+                    </li>
+                    {% for recipient in mailing.recipients.all %}
+                    <li class="list-group-item">
+                        Получатель - {{ recipient.email}}
+                    <input type="hidden" name="recipient" value="{{ recipient.email }}">
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="card-body">
+                    <a href="{% url 'mailing:mailing_edit' mailing.pk %}" class="btn btn-secondary">Редактировать</a>
+                    <a href="{% url 'mailing:mailing_delete' mailing.pk %}" class="btn btn-secondary">Удалить</a>
+                    <a href="{% url 'mailing:mailing_list' %}" class="btn btn-secondary">Вернуться к списку рассылок</a>
+                    <button type="submit" class="btn btn-outline-primary">Отправить</button>
+                </div>
+            </form>
         </div>
     </div>
 </section>

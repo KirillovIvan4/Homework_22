@@ -7,10 +7,9 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from online_store.models import Product, Category
 from online_store.forms import ProductForm
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 
-from online_store.services import get_products_from_cache, get_categorys_from_cache, get_products_by_category
+from online_store.services import get_products_from_cache, get_products_by_category
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):

@@ -1,12 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import  CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from mailing.models import Mailing_recipient, Message, Mailing
+from django.shortcuts import redirect
+from django.contrib import messages
+
+from config.settings import EMAIL_HOST_USER
+from mailing.models import Mailing_recipient, Message, Mailing, Mailing_attempt
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
+from django.core.mail import send_mail
 
 class Mailing_recipientCreateView(LoginRequiredMixin, CreateView):
     model = Mailing_recipient
@@ -86,8 +91,59 @@ class MailingListView(ListView):
 @method_decorator(cache_page(60 * 15), name='dispatch')
 class MailingDetailView(DetailView):
     model = Mailing
-    #template_name = 'Mailing_detail.html'
     context_object_name = 'mailing'
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+
+        subject_letter = request.POST.get("subject_letter")
+        body_letter = request.POST.get("body_letter")
+        recipients = [recipient.email for recipient in self.object.recipients.all()]
+
+        # Логика отправки писем и создания попыток
+        for recipient in recipients:
+            try:
+                # Отправка письма
+                send_mail(
+                    subject_letter,
+                    body_letter,
+                    EMAIL_HOST_USER,  # Отправитель
+                    [recipient],  # Получатель
+                    fail_silently=False,
+                )
+
+                # Создание записи об успешной попытке
+                Mailing_attempt.objects.create(
+                    status=Mailing_attempt.SUCCESSFUL,
+                    mail_server_response="Письмо успешно отправлено",
+                    message=self.object,
+                )
+
+            except Exception as e:
+                # Создание записи о неудачной попытке
+                Mailing_attempt.objects.create(
+                    status=Mailing_attempt.NOT_SUCCESSFUL,
+                    mail_server_response=str(e),
+                    message=self.object,
+                )
+
+        messages.success(request, "Рассылка завершена. Проверьте попытки отправки.")
+        return redirect('mailing:mailing_list')
+        # recipients = request.POST.getlist("recipient")
+        # send_mail(
+        #     subject_letter,
+        #     body_letter,
+        #     'kirillov.ivankirillov1993@yandex.ru',
+        #     #email_list,
+        #     recipients,
+        #     fail_silently=False,
+        # )
+        # Mailing_attempt.objects.create(
+        #     status=Mailing_attempt.SUCCESSFUL,
+        #     mail_server_response="Письмо успешно отправлено",
+        #     message=self.object,
+        # )
+        # return redirect('mailing:mailing_list')
 
 class MailingUpdateView(LoginRequiredMixin, UpdateView):
     model = Mailing

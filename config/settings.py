@@ -149,8 +149,8 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 LOGIN_REDIRECT_URL = 'online_store:product_list'
 LOGIN_URL = 'users:login'
 
-
-CACHE_ENABLED = True
+# Кэширование
+CACHE_ENABLED = False
 if CACHE_ENABLED:
     CACHES = {
         'default': {
@@ -158,3 +158,7 @@ if CACHE_ENABLED:
             'LOCATION': 'redis://127.0.0.1:6379/1',
         }
 }
+# Отладка сообщений
+EMAIL_BACKEND_ENABLED = False
+if EMAIL_BACKEND_ENABLED:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
