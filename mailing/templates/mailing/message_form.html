@@ -3,10 +3,12 @@
 {% block show_mailing%} {% include 'online_store/menu.html' %}  {% endblock %}
 {% block content %}
 <div class="container mt-5">Добавить сообщение
+    {% if user.is_superuser or 'Пользователи' in user_groups %}
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Сохранить</button>
+        {% endif %}
         <a href="{% url 'blogs:publications_list' %}" class="btn btn-secondary">Отмена</a>
     </form>
 </div>

@@ -6,6 +6,7 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from blogs.models import Publications
 from blogs.services import get_publications_from_cache
+from django.core.exceptions import PermissionDenied
 
 
 class PublicationsCreateView(LoginRequiredMixin, CreateView):
@@ -21,6 +22,11 @@ class PublicationsCreateView(LoginRequiredMixin, CreateView):
         publication.save()
         return super().form_valid(form)
 
+    def dispatch(self, request, *args, **kwargs):
+        # Проверка прав доступа
+        if not (request.user.is_superuser or request.user.groups.filter(name='Пользователи').exists()):
+            raise PermissionDenied("У вас нет прав для редактирования публикации.")
+        return super().dispatch(request, *args, **kwargs)
 
 @method_decorator(cache_page(60 * 15), name='dispatch')
 class PublicationsListView(ListView):
@@ -41,7 +47,6 @@ class PublicationsListView(ListView):
 @method_decorator(cache_page(60 * 15), name='dispatch')
 class PublicationsDetailView(DetailView):
     model = Publications
-    #template_name = 'Publications_detail.html'
     context_object_name = 'publications'
 
     def get_object(self, queryset=None):
@@ -58,7 +63,19 @@ class PublicationsUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse('blogs:publications_detail', args=[self.kwargs.get('pk')])
 
+    def dispatch(self, request, *args, **kwargs):
+        # Проверка прав доступа
+        if not (request.user.is_superuser or request.user.groups.filter(name='Пользователи').exists()):
+            raise PermissionDenied("У вас нет прав для редактирования публикации.")
+        return super().dispatch(request, *args, **kwargs)
+
 class PublicationsDeleteView(DeleteView):
     model = Publications
     #template_name = 'Publications_confirm_delete.html'
     success_url = reverse_lazy('blogs:publications_list')
+
+    def dispatch(self, request, *args, **kwargs):
+        # Проверка прав доступа
+        if not (request.user.is_superuser or request.user.groups.filter(name='Пользователи').exists()):
+            raise PermissionDenied("У вас нет прав для редактирования публикации.")
+        return super().dispatch(request, *args, **kwargs)

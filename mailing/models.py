@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import CustomUser
+
 # Create your models here.
 NULLBLE = {"blank": True, "null": True}
 
@@ -56,6 +58,13 @@ class Mailing(models.Model):
     )
     recipients = models.ManyToManyField('Mailing_recipient', verbose_name="получатель", related_name='mailings',
                                         **NULLBLE)
+    user = models.ForeignKey(
+        CustomUser,
+        on_delete=models.SET_NULL,
+        related_name="mailings",
+        verbose_name="создатель",
+        **NULLBLE
+    )
 
     class Meta:
         verbose_name = "рассылка"
@@ -81,6 +90,9 @@ class Mailing_attempt(models.Model):
         verbose_name_plural = "попытки_рассылки"
         ordering = ["status", "date_and_time_of_sending"]  # Сортировка
         db_table = 'Mailing_attempt'
+        permissions = [
+            ("can_disable_mailing", "Возможность отключения рассылки"),
+        ]
 
     def __str__(self):
         return f"Попытка рассылки {self.id} - {self.status}"

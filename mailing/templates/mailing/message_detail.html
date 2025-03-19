@@ -7,7 +7,7 @@
         <div class="card" style="width: 40rem;">
             <img src="{{ publications.preview }}" width: 100px; height: 100px;>
             <div class="card-body">
-                <h2 class="card-title" >Тема письма - {{message.subject_letter}}</h2>
+                <h2 class="card-title">Тема письма - {{message.subject_letter}}</h2>
 
             </div>
             <ul class="list-group list-group-flush">
@@ -15,8 +15,10 @@
                 <li class="list-group-item">Тело письма - {{message.body_letter}}</li>
             </ul>
             <div class="card-body">
+                {% if user.is_superuser or 'Пользователи' in user_groups %}
                 <a href="{% url 'mailing:message_edit' message.pk %}" class="btn btn-secondary">Редактировать</a>
                 <a href="{% url 'mailing:message_delete' message.pk %}" class="btn btn-secondary">Удалить</a>
+                {% endif %}
                 <a href="{% url 'mailing:message_list' %}" class="btn btn-secondary">Вернуться к списку</a>
             </div>
         </div>
