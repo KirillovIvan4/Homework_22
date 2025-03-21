@@ -1,17 +1,30 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+NULLBLE = {"blank": True, "null": True}
+
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
-    phone_number = models.CharField(max_length=15, blank=True, null=True)
-    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
-    country  = models.CharField(max_length=100, blank=True, null=True)
+    phone_number = models.CharField(max_length=15, **NULLBLE)
+    avatar = models.ImageField(upload_to='avatars/', **NULLBLE)
+    country  = models.CharField(max_length=100, **NULLBLE)
+    is_verified = models.BooleanField(default=False, verbose_name="Подтверждён")
+    token = models.CharField(max_length=100, verbose_name="Token", **NULLBLE)
+    ban = models.BooleanField(default=False, verbose_name="Заблокирован")
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
     def __str__(self):
         return self.email
+
+    class Meta:
+        verbose_name = "Пользователь"
+        verbose_name_plural = "Пользователи"
+        permissions = [
+            ("can_block_user", "Возможность блокировки пользователя"),
+        ]
+
 
 
 # Create your models here.

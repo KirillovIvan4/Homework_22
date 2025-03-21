@@ -17,9 +17,12 @@
 
             </ul>
             <div class="card-body">
+                {% if user.is_superuser or user.groups.filter(name='Пользователи').exists %}
                 <a href="{% url 'mailing:mailing_recipient_edit' mailing_recipient.pk %}" class="btn btn-secondary">Редактировать</a>
                 <a href="{% url 'mailing:mailing_recipient_delete' mailing_recipient.pk %}" class="btn btn-secondary">Удалить</a>
-                <a href="{% url 'mailing:mailing_recipient_list' %}" class="btn btn-secondary">Вернуться к списку получателей</a>
+                {% endif %}
+                <a href="{% url 'mailing:mailing_recipient_list' %}" class="btn btn-secondary">Вернуться к списку
+                    получателей</a>
             </div>
         </div>
     </div>

@@ -6,7 +6,9 @@
 от - {{mailing.date_and_time_of_first_sending }}
 <form method="post">
     {% csrf_token %}
+        {% if user.is_superuser or 'Пользователи' in user_groups %}
     <button type="submit" class="btn btn-danger">Удалить</button>
+    {% endif %}
     <a href="{% url 'mailing:mailing_list' %}" class="btn btn-secondary">Отмена</a>
 </form>
 {% endblock %}

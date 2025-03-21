@@ -3,19 +3,52 @@
 {% block show_mailing%} {% include 'online_store/menu.html' %}  {% endblock %}
 {% block content %}
 <h1 class="text-center"> Рассылка </h1>
-<div class="album py-5 bg-body-tertiary">
-    <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for mailing in object_list%}
-            <div class="card" style="width: 18rem;">
+<div class="container mt-4">
+    <h2>Статистика рассылок</h2>
+    <ul class="list-group">
+        <li class="list-group-item">Всего рассылок: {{ total_mailings }}</li>
+        <li class="list-group-item">Активных рассылок: {{ active_mailings }}</li>
+        <li class="list-group-item">Уникальных получателей: {{ unique_recipients }}</li>
+    </ul>
+</div>
+
+<!-- Статистика попыток -->
+<div class="container mt-4">
+    <h2>Статистика попыток</h2>
+    <ul class="list-group">
+        <li class="list-group-item">Всего попыток: {{ total_attempts }}</li>
+        <li class="list-group-item">Успешных попыток: {{ successful_attempts }}</li>
+        <li class="list-group-item">Неуспешных попыток: {{ failed_attempts }}</li>
+    </ul>
+</div>
+<!-- Список рассылок -->
+<div class="container mt-4">
+    <h2>Список рассылок</h2>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+{% for mailing in object_list %}
+        <div class="col">
+            <div class="card h-100">
                 <div class="card-body">
-                    <a href="{% url 'mailing:mailing_detail' mailing.pk %}">Дата и время первой отправки - {{mailing.date_and_time_of_first_sending}}</a>
-                    <p class="card-text">Дата и время окончания отправки - {{mailing.date_and_time_of_sending_end}}</p>
-                    <p class="card-text">Статус - {{mailing.status}}</p>
+                    <h5 class="card-title">{{ mailing.subject }}</h5>
+                    <p class="card-text">Статус: {{ mailing.get_status_display }}</p>
+                     {% if not mailing.is_active %}
+                                <a type="button" class="btn btn-danger btn-sm"
+                                   href="{% url 'mailing:block_mailing' mailing.pk %}">Заблокировать</a>
+                            {% else %}
+                                <a type="button" class="btn btn-success btn-sm"
+                                   href="{% url 'mailing:block_mailing' mailing.pk %}">Разблокировать</a>
+                            {% endif %}
+
+                        {{object.is_active|yesno:"Не активна, Активна"}}
+
+                    <a href="{% url 'mailing:mailing_detail' mailing.pk %}" class="btn btn-primary">Подробнее</a>
                 </div>
             </div>
-            {% endfor %}
+        </div>
+        {% endfor %}
         </div>
     </div>
 </div>
+
+
 {% endblock %}

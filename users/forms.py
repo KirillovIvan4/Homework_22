@@ -1,5 +1,7 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
+
+from online_store.forms import StyleFormMixin
 from .models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
@@ -14,3 +16,8 @@ class CustomUserCreationForm(UserCreationForm):
         if phone_number and not phone_number.isdigit():
             raise forms.ValidationError('Phone number must contain only digits.')
         return phone_number
+
+class PasswordRecoveryForm(StyleFormMixin, PasswordResetForm):
+    class Meta:
+        model = CustomUser
+        fields = ('email',)

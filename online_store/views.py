@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
@@ -7,17 +8,14 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from online_store.models import Product, Category
 from online_store.forms import ProductForm
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 
-from online_store.services import get_products_from_cache, get_categorys_from_cache, get_products_by_category
+from online_store.services import get_products_from_cache, get_products_by_category
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
-    #fields = ['name', 'description', 'category', 'purchase_price', 'preview']
-    #template_name = 'product_form.html'
     success_url = reverse_lazy('online_store:product_list')
 
     def form_valid(self, form):
@@ -26,6 +24,12 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         product.creator = user
         product.save()
         return super().form_valid(form)
+
+    def dispatch(self, request, *args, **kwargs):
+        # Проверка прав доступа
+        if not (request.user.is_superuser or request.user.groups.filter(name='Пользователи').exists()):
+            raise PermissionDenied("У вас нет прав для редактирования публикации.")
+        return super().dispatch(request, *args, **kwargs)
 
 
 @method_decorator(cache_page(60 * 15), name='dispatch')
@@ -50,10 +54,22 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     #fields = ['name', 'description', 'category', 'purchase_price', 'preview']
     success_url = reverse_lazy('online_store:product_list')
 
+    def dispatch(self, request, *args, **kwargs):
+        # Проверка прав доступа
+        if not (request.user.is_superuser or request.user.groups.filter(name='Пользователи').exists()):
+            raise PermissionDenied("У вас нет прав для редактирования публикации.")
+        return super().dispatch(request, *args, **kwargs)
+
 class ProductDeleteView(DeleteView):
     model = Product
     #template_name = 'product_confirm_delete.html'
     success_url = reverse_lazy('online_store:product_list')
+
+    def dispatch(self, request, *args, **kwargs):
+        # Проверка прав доступа
+        if not (request.user.is_superuser or request.user.groups.filter(name='Пользователи').exists()):
+            raise PermissionDenied("У вас нет прав для редактирования публикации.")
+        return super().dispatch(request, *args, **kwargs)
 
 def contacts(request):
     if request.method == "POST":
@@ -68,17 +84,26 @@ def contacts(request):
 class CategoryCreateView(LoginRequiredMixin, CreateView):
     model = Category
     fields = ['name', 'description']
-    #template_name = 'product_form.html'
     success_url = reverse_lazy('online_store:category_list')
 
+    def dispatch(self, request, *args, **kwargs):
+        # Проверка прав доступа
+        if not (request.user.is_superuser or request.user.groups.filter(name='Пользователи').exists()):
+            raise PermissionDenied("У вас нет прав для редактирования публикации.")
+        return super().dispatch(request, *args, **kwargs)
+
+# @method_decorator(cache_page(60 * 15), name='dispatch')
 class CategoryListView(ListView):
     model = Category
-    #template_name = 'product_list.html'
     context_object_name = 'category'
 
-    def get_queryset(self):
-        return get_categorys_from_cache()
+    def dispatch(self, request, *args, **kwargs):
+        # Проверка прав доступа
+        if not (request.user.is_superuser or request.user.groups.filter(name='Пользователи').exists()):
+            raise PermissionDenied("У вас нет прав для редактирования публикации.")
+        return super().dispatch(request, *args, **kwargs)
 
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class CategoryDetailView(DetailView):
     model = Category
     #template_name = 'product_detail.html'
@@ -89,10 +114,22 @@ class CategoryUpdateView(LoginRequiredMixin, UpdateView):
     fields = ['name', 'description']
     success_url = reverse_lazy('online_store:category_list')
 
+    def dispatch(self, request, *args, **kwargs):
+        # Проверка прав доступа
+        if not (request.user.is_superuser or request.user.groups.filter(name='Пользователи').exists()):
+            raise PermissionDenied("У вас нет прав для редактирования публикации.")
+        return super().dispatch(request, *args, **kwargs)
+
 class CategoryDeleteView(DeleteView):
     model = Category
     #template_name = 'product_confirm_delete.html'
     success_url = reverse_lazy('online_store:category_list')
+
+    def dispatch(self, request, *args, **kwargs):
+        # Проверка прав доступа
+        if not (request.user.is_superuser or request.user.groups.filter(name='Пользователи').exists()):
+            raise PermissionDenied("У вас нет прав для редактирования публикации.")
+        return super().dispatch(request, *args, **kwargs)
 
 def category_product_detail(request, pk):
     category = Category.objects.get(pk=pk)
