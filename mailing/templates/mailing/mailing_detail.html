@@ -30,14 +30,14 @@
                     </li>
                     {% endfor %}
                 </ul>
-                {% if user.is_superuser or 'Пользователи' in user_groups %}
+
                 <div class="card-body">
                     <a href="{% url 'mailing:mailing_edit' mailing.pk %}" class="btn btn-secondary">Редактировать</a>
                     <a href="{% url 'mailing:mailing_delete' mailing.pk %}" class="btn btn-secondary">Удалить</a>
                     <a href="{% url 'mailing:mailing_list' %}" class="btn btn-secondary">Вернуться к списку рассылок</a>
                     <button type="submit" class="btn btn-outline-primary">Отправить</button>
                 </div>
-                {% endif %}
+
             </form>
         </div>
     </div>

@@ -2,7 +2,8 @@ from django.urls import path
 from django.views.decorators.cache import cache_page
 
 from . import views
-from mailing.views import MailingCreateView, MailingUpdateView, MailingDeleteView, MailingListView, MailingDetailView
+from mailing.views import MailingCreateView, MailingUpdateView, MailingDeleteView, MailingListView, MailingDetailView, \
+    block_mailing
 from mailing.views import Mailing_recipientCreateView, Mailing_recipientUpdateView, Mailing_recipientDeleteView, Mailing_recipientListView, Mailing_recipientDetailView
 from mailing.views import MessageCreateView, MessageUpdateView, MessageDeleteView, MessageListView, MessageDetailView
 
@@ -14,6 +15,7 @@ urlpatterns = [
     path('mailing/new/', MailingCreateView.as_view(), name='mailing_create'),
     path('mailing/<int:pk>/edit/', MailingUpdateView.as_view(), name='mailing_edit'),
     path('mailing/<int:pk>/delete/', MailingDeleteView.as_view(), name='mailing_delete'),
+    path("block_mailing/<int:pk>", block_mailing, name="block_mailing"),
 
     path('mailing_recipient/', Mailing_recipientListView.as_view(), name='mailing_recipient_list'),
     path('mailing_recipient/<int:pk>/',  cache_page(60)(Mailing_recipientDetailView.as_view()), name='mailing_recipient_detail'),

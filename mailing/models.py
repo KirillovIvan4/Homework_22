@@ -49,6 +49,7 @@ class Mailing(models.Model):
                                                           verbose_name="дата и время первой отправки")
     date_and_time_of_sending_end = models.DateTimeField(verbose_name="дата и время окончания отправки")
     status = models.CharField(max_length=100, choices=STATUS_MAILING, default=CREATED, verbose_name="статус")
+    is_active = models.BooleanField(default=True, verbose_name="активна")
     message = models.ForeignKey(
         'Message',
         on_delete=models.SET_NULL,

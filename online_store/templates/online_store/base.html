@@ -169,6 +169,13 @@
                                         {% endif %}
                                     </div>
                                 </div>
+                                {% if user.is_authenticated %}
+                                        <li>
+                                            <a href="{% url 'users:user_list' %}"
+                                               class="nav-link px-0 text-light"> <span
+                                                    class="d-none d-sm-inline">Пользователи</span> </a>
+                                        </li>
+                                        {% endif %}
                             </div>
                         </div>
                         <li>

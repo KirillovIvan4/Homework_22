@@ -246,3 +246,8 @@ class MailingDeleteView(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 
 
+def block_mailing(request, pk):
+    mailing = Mailing.objects.get(pk=pk)
+    mailing.is_active = {mailing.is_active: False, not mailing.is_active: True}[True]
+    mailing.save()
+    return redirect(reverse("mailing:mailing_list"))

@@ -10,6 +10,7 @@ class CustomUser(AbstractUser):
     country  = models.CharField(max_length=100, **NULLBLE)
     is_verified = models.BooleanField(default=False, verbose_name="Подтверждён")
     token = models.CharField(max_length=100, verbose_name="Token", **NULLBLE)
+    ban = models.BooleanField(default=False, verbose_name="Заблокирован")
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']

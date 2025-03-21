@@ -162,3 +162,4 @@ if CACHE_ENABLED:
 EMAIL_BACKEND_ENABLED = False
 if EMAIL_BACKEND_ENABLED:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+

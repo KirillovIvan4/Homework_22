@@ -31,6 +31,16 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ mailing.subject }}</h5>
                     <p class="card-text">Статус: {{ mailing.get_status_display }}</p>
+                     {% if not mailing.is_active %}
+                                <a type="button" class="btn btn-danger btn-sm"
+                                   href="{% url 'mailing:block_mailing' mailing.pk %}">Заблокировать</a>
+                            {% else %}
+                                <a type="button" class="btn btn-success btn-sm"
+                                   href="{% url 'mailing:block_mailing' mailing.pk %}">Разблокировать</a>
+                            {% endif %}
+
+                        {{object.is_active|yesno:"Не активна, Активна"}}
+
                     <a href="{% url 'mailing:mailing_detail' mailing.pk %}" class="btn btn-primary">Подробнее</a>
                 </div>
             </div>

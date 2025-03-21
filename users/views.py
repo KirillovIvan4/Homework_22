@@ -1,27 +1,14 @@
 import secrets
 
-from django.shortcuts import get_object_or_404, redirect
-from django.views.generic.edit import CreateView
-from django.views.generic.edit import FormView
-from django.urls import reverse_lazy, reverse
-from django.core.mail import send_mail
-from django.contrib.auth import login
-from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import PasswordResetView
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, ListView
 from django.http import HttpResponseRedirect
-
+from django.contrib.auth.decorators import permission_required
 from django.core.mail import send_mail
-from django.http import JsonResponse
-from django.views import View
-from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
+from django.contrib.auth.models import Group
 from config.settings import EMAIL_HOST_USER
 from online_store.forms import StyleFormMixin
 from .forms import CustomUserCreationForm, PasswordRecoveryForm
@@ -83,3 +70,32 @@ class PasswordRecoveryView(TemplateView,PasswordResetView, StyleFormMixin):
             [user.email],
         )
         return HttpResponseRedirect('/users/login/')
+
+@permission_required("users.view_user")
+def block_user(self, pk):
+    user = CustomUser.objects.get(pk=pk)
+    user.is_active = {user.is_active: False, not user.is_active: True}[True]
+    user.save()
+    return redirect(reverse("users:user_list"))
+
+class CustomUserListView(ListView):
+    model = CustomUser
+    context_object_name = 'User'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not (self.request.user.is_superuser or self.request.user.groups.filter(name="Менеджеры").exists()):
+            raise PermissionDenied("У вас нет прав для редактирования публикации.")
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        """
+        Исключаем суперпользователей и пользователей из группы "Менеджеры".
+        """
+        # Получаем всех пользователей, кроме суперпользователей
+        queryset = CustomUser.objects.filter(is_superuser=False)
+
+        # Исключаем пользователей из группы "Менеджеры"
+        manager_group = Group.objects.get(name="Менеджеры")
+        queryset = queryset.exclude(groups=manager_group)
+
+        return queryset
